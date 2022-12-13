@@ -3,18 +3,17 @@
 import * as vscode from 'vscode';
 
 export default class Configuration {
-    private config : vscode.WorkspaceConfiguration;
+    private config: vscode.WorkspaceConfiguration;
 
-    public constructor()
-    {
+    public constructor() {
         this.config = vscode.workspace.getConfiguration('phpGettersSetters');
     }
 
-    get(key: string, defaultValue: any) {
+    get(key: string, defaultValue: any = null) {
         return this.config.get(key, defaultValue);
     }
 
-    getInt(key: string, defaultValue : number) : number {
+    getInt(key: string, defaultValue: number): number {
         return parseInt(this.get(key, defaultValue));
     }
 }

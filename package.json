@@ -1,190 +1,141 @@
 {
-  "name": "vscode-php-getters-setters-cv",
-  "displayName": "PHP Getters & Setters (CV fork)",
-  "description": "Create PHP getters and setters from class properties",
-  "version": "1.6.1",
-  "publisher": "cvergne",
-  "author": "Roberto Segura <roberto@phproberto.com>",
-  "contributors": [
-    "Christophe VERGNE <dev@christophevergne.fr>"
-  ],
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/cvergne/vscode-php-getters-setters"
-  },
-  "bugs": {
-    "url": "https://github.com/cvergne/vscode-php-getters-setters/issues"
-  },
-  "icon": "images/icon.png",
-  "engines": {
-    "vscode": "^1.63.0"
-  },
-  "categories": [
-    "Other"
-  ],
-  "keywords": [
-    "php",
-    "getter",
-    "getters",
-    "setter",
-    "setters"
-  ],
-  "activationEvents": [
-    "onLanguage:php",
-    "onCommand:phpGettersSetters.insertGetter",
-    "onCommand:phpGettersSetters.insertSetter",
-    "onCommand:phpGettersSetters.insertGetterAndSetter"
-  ],
-  "main": "./out/extension",
-  "contributes": {
-    "configuration": {
-      "type": "object",
-      "title": "PHP getters & setters configuration",
-      "properties": {
-        "phpGettersSetters.redirect": {
-          "type": "boolean",
-          "default": true,
-          "description": "Redirect to generated functions after creating them?"
-        },
-        "phpGettersSetters.spacesAfterParam": {
-          "type": "integer",
-          "default": 2,
-          "description": "How many spaces should we add after a @param tag?"
-        },
-        "phpGettersSetters.spacesAfterParamVar": {
-          "type": "integer",
-          "default": 2,
-          "description": "How many spaces should we add after a @param variable name?"
-        },
-        "phpGettersSetters.spacesAfterReturn": {
-          "type": "integer",
-          "default": 2,
-          "description": "How many spaces should we add after a @return tag?"
-        },
-        "phpGettersSetters.generatePHPDoc": {
-          "type": "boolean",
-          "default": true,
-          "description": "Generate PHPDoc in the generated functions?"
-        },
-        "phpGettersSetters.enablePHP7TypeHints": {
-          "type": "boolean",
-          "default": true,
-          "description": "Enable the PHP 7+ type hints (nullable type in setter, return type in getter)?"
-        },
-        "phpGettersSetters.templatesDir": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "default": null,
-          "description": "Folder where custom templates are stored"
-        },
-        "phpGettersSetters.getterTemplate": {
-          "type": "string",
-          "default": "getter.js",
-          "description": "File to use as template for getters"
-        },
-        "phpGettersSetters.setterTemplate": {
-          "type": "string",
-          "default": "setter.js",
-          "description": "File to use as template for setters"
-        }
-      }
+    "name": "vscode-php-getters-setters-new",
+    "displayName": "PHP Getters & Setters (New)",
+    "description": "PHP class properties support (add/remove/getters/setters)",
+    "version": "0.0.1",
+    "publisher": "ctf0",
+    "author": "ctf0",
+    "repository": "https://github.com/ctf0/vscode-php-getters-setters",
+    "icon": "images/icon.png",
+    "engines": {
+        "vscode": "^1.68.0"
     },
-    "keybindings": [
-      {
-        "command": "phpGettersSetters.insertAllGetterAndSetter",
-        "key": "ctrl+alt+g",
-        "mac": "cmd+opt+g",
-        "when": "editorTextFocus"
-      }
+    "categories": [
+        "Other"
     ],
-    "commands": [
-      {
-        "command": "phpGettersSetters.insertGetter",
-        "title": "Insert pointed PHP Getter"
-      },
-      {
-        "command": "phpGettersSetters.insertSetter",
-        "title": "Insert pointed PHP Setter"
-      },
-      {
-        "command": "phpGettersSetters.insertGetterAndSetter",
-        "title": "Insert pointed PHP Getter & Setter"
-      },
-      {
-        "command": "phpGettersSetters.insertAllGetterAndSetter",
-        "title": "Insert all PHP Getter & Setter"
-      }
+    "keywords": [
+        "php",
+        "getter",
+        "setter",
+        "property",
+        "property promotion",
+        "php8"
     ],
-    "menus": {
-      "commandPalette": [
-        {
-          "command": "phpGettersSetters.insertGetter",
-          "when": "editorLangId == php"
+    "activationEvents": [
+        "onLanguage:php"
+    ],
+    "main": "./out/main",
+    "contributes": {
+        "configuration": {
+            "type": "object",
+            "title": "PHP Getters & Setters",
+            "properties": {
+                "phpGettersSetters.redirect": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Redirect to generated functions after creating them?"
+                },
+                "phpGettersSetters.templatesDir": {
+                    "type": [
+                        "string",
+                        null
+                    ],
+                    "default": null,
+                    "description": "Folder where custom templates are stored"
+                }
+            }
         },
-        {
-          "command": "phpGettersSetters.insertSetter",
-          "when": "editorLangId == php"
-        },
-        {
-          "command": "phpGettersSetters.insertGetterAndSetter",
-          "when": "editorLangId == php"
-        },
-        {
-          "command": "phpGettersSetters.insertAllGetterAndSetter",
-          "when": "editorLangId == php"
+        "commands": [
+            {
+                "command": "phpGettersSetters.insert",
+                "title": "Add To Property",
+                "category": "Php Getters/Setters"
+            },
+            {
+                "command": "phpGettersSetters.remove",
+                "title": "Remove From Property",
+                "category": "Php Getters/Setters"
+            },
+            {
+                "command": "phpGettersSetters.insertAll",
+                "title": "Add To All Properties",
+                "category": "Php Getters/Setters"
+            },
+            {
+                "command": "phpGettersSetters.removeAll",
+                "title": "Remove From All Properties",
+                "category": "Php Getters/Setters"
+            },
+            {
+                "command": "phpGettersSetters.removeSelfAndMethods",
+                "title": "Remove From & Property",
+                "category": "Php Getters/Setters"
+            },
+            {
+                "command": "phpGettersSetters.addConstructor",
+                "title": "Add Constructor",
+                "category": "Php Getters/Setters"
+            },
+            {
+                "command": "phpGettersSetters.addNewProperty",
+                "title": "Add New Property",
+                "category": "Php Getters/Setters"
+            }
+        ],
+        "menus": {
+            "commandPalette": [
+                {
+                    "command": "phpGettersSetters.insert",
+                    "when": "editorLangId == php"
+                },
+                {
+                    "command": "phpGettersSetters.remove",
+                    "when": "editorLangId == php"
+                },
+                {
+                    "command": "phpGettersSetters.insertAll",
+                    "when": "editorLangId == php"
+                },
+                {
+                    "command": "phpGettersSetters.removeAll",
+                    "when": "editorLangId == php"
+                },
+                {
+                    "command": "phpGettersSetters.removeSelfAndMethods",
+                    "when": "editorLangId == php"
+                },
+                {
+                    "command": "phpGettersSetters.addConstructor",
+                    "when": "editorLangId == php"
+                },
+                {
+                    "command": "phpGettersSetters.addNewProperty",
+                    "when": "editorLangId == php"
+                }
+            ]
         }
-      ],
-      "editor/context": [
-        {
-          "when": "resourceLangId == php",
-          "command": "phpGettersSetters.insertGetter",
-          "alt": "phpGettersSetters.insertGetter",
-          "group": "0_phpGettersSetters@1"
-        },
-        {
-          "when": "resourceLangId == php",
-          "command": "phpGettersSetters.insertSetter",
-          "alt": "phpGettersSetters.insertSetter",
-          "group": "0_phpGettersSetters@2"
-        },
-        {
-          "when": "resourceLangId == php",
-          "command": "phpGettersSetters.insertGetterAndSetter",
-          "alt": "phpGettersSetters.insertGetterAndSetter",
-          "group": "0_phpGettersSetters@3"
-        },
-        {
-          "when": "resourceLangId == php",
-          "command": "phpGettersSetters.insertAllGetterAndSetter",
-          "alt": "phpGettersSetters.insertAllGetterAndSetter",
-          "group": "0_phpGettersSetters@4"
-        }
-      ]
-    }
-  },
-  "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile",
-    "test": "node ./out/test/runTest.js"
-  },
-  "devDependencies": {
-    "@types/glob": "^7.1.1",
-    "@types/mocha": "^5.2.6",
-    "@types/node": "^12.12.0",
-    "@types/vscode": "^1.63.1",
-    "@typescript-eslint/eslint-plugin": "^4.16.0",
-    "@typescript-eslint/parser": "^4.16.0",
-    "@vscode/test-electron": "^2.1.1",
-    "eslint": "^7.21.0",
-    "glob": "^7.1.4",
-    "mocha": "^6.1.4",
-    "source-map-support": "^0.5.12",
-    "typescript": "^4.2.2"
-  },
-  "dependencies": {}
+    },
+    "scripts": {
+        "compile": "tsc -p ./",
+        "vscode:prepublish": "npm run esbuild-base -- --minify",
+        "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node",
+        "esbuild": "npm run esbuild-base -- --sourcemap",
+        "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
+        "watch": "npm run vscode:prepublish"
+    },
+    "devDependencies": {
+        "@types/node": "^18.11.15",
+        "@types/vscode": "^1.68.0",
+        "esbuild": "^0.16.6",
+        "typescript": "^4.9.4"
+    },
+    "dependencies": {
+        "doc-parser": "^0.4.9",
+        "lodash.set": "^4.3.2",
+        "lodash.throttle": "^4.1.1",
+        "php-parser": "^3.1.2"
+    },
+    "extensionDependencies": [
+        "ctf0.blank-line-organizer"
+    ]
 }
