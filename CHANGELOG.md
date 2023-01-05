@@ -15,3 +15,7 @@
 - remove default template directories creation & rely on the user config instead
 - much smaller pkg size
 - add cmnd to add new (property/property promotion, constructor)
+
+## 0.0.2
+
+- support adding property to method, same as constructor, cmnd will add property based on the cursor location

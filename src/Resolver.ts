@@ -514,7 +514,7 @@ export default class Resolver {
         let position: any;
         let prefix = '';
         let suffix = '';
-        let snippet = "\${1|public,private,protected|} \${2:mixed} \$\$3\${4: = \${5:''}}";
+        let snippet = "\${1|public,private,protected|} \${2:type} \$\${3:name}\${4: = \${5:'value'}}";
 
         const activeLine = selection.active.line;
         const _const = parser.getConstructor(this.CLASS_AST);
@@ -553,12 +553,7 @@ export default class Resolver {
                     _const.body.loc.start.column,
                 ));
 
-                position = document.positionAt
-                (
-                    _const.loc.start.offset +
-                        constLineText.indexOf('(')
-                        + 1,
-                );
+                position = document.positionAt(_const.loc.start.offset + constLineText.indexOf('(') + 1);
 
                 position = {
                     line   : position.line,
@@ -567,13 +562,66 @@ export default class Resolver {
             }
         }
 
-        if (!_const || (_const && !insideConstructorBody)) {
+        const _methods = parser.getAllMethods(this.CLASS_AST);
+        const insideMethodBody = _methods?.find((method) => method.loc.start.line - 1 <= activeLine && method.loc.end.line - 1 >= activeLine);
+
+        if (_methods && insideMethodBody && !insideConstructorBody) {
+            snippet = "\${1:type} \$\${2:var}\${3: = \${4:'value'}}";
+
+            const args = insideMethodBody?.arguments;
+
+            if (args.length) {
+                const firstArg = args[0];
+                const lastArg = args[args.length - 1];
+
+                position = {
+                    line   : lastArg.loc.end.line - 1,
+                    column : lastArg.loc.end.column,
+                };
+
+                if (firstArg !== lastArg) {
+                    // args are multiline
+                    if (firstArg.loc.end.line !== lastArg.loc.end.line) {
+                        prefix = ',\n';
+                    }
+                }
+
+                // one arg
+                // or multi args on the same line
+                if (firstArg === lastArg || (firstArg.loc.end.line === lastArg.loc.end.line)) {
+                    prefix = ', ';
+                }
+            } else {
+                // get insert place when no args
+                const constLineText = document.getText(new vscode.Range(
+                    _const.loc.start.line - 1,
+                    _const.loc.start.column,
+                    _const.body.loc.start.line - 1,
+                    _const.body.loc.start.column,
+                ));
+
+                position = document.positionAt(_const.loc.start.offset + constLineText.indexOf('(') + 1);
+
+                position = {
+                    line   : position.line,
+                    column : position.character,
+                };
+            }
+        }
+
+        if (!insideConstructorBody && !insideMethodBody) {
             position = parser.getClassScopeInsertLine(this.CLASS_AST);
 
-            const isPlainClass = position.column == 0;
-
-            prefix = `${isPlainClass ? this.DEFAULT_INDENT : '\n\n'}`;
+            prefix = '\n';
             suffix = ';\n';
+
+            if (position.column == 0) {
+                prefix = this.DEFAULT_INDENT;
+            }
+
+            if (position.column == this.DEFAULT_INDENT.length) {
+                prefix = '';
+            }
         }
 
         snippet = `${prefix}${snippet}${suffix}`;

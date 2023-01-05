@@ -56,8 +56,6 @@ export function getClassScopeInsertLine(_classAST: any) {
     if (_properties && _properties.length) {
         position = _properties[_properties.length - 1];
 
-        console.log(position);
-
         return {
             line   : position.loc.end.line - 1,
             column : position.loc.end.column,
