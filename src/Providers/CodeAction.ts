@@ -11,7 +11,7 @@ export default class CodeAction implements vscode.CodeActionProvider {
     PROMOS: any;
 
     public provideCodeActions(document: vscode.TextDocument, range: vscode.Range): vscode.CodeAction[] | undefined {
-        if (!range.isEmpty) {
+        if (!range.isEmpty || !document) {
             return;
         }
 
@@ -24,7 +24,7 @@ export default class CodeAction implements vscode.CodeActionProvider {
         const list = [
             {
                 command : `${utils.CMND_NAME}.addNewProperty`,
-                title   : "Add New Property",
+                title   : 'Add New Property',
             },
         ];
 
@@ -35,28 +35,30 @@ export default class CodeAction implements vscode.CodeActionProvider {
             list.push(
                 {
                     command : `${utils.CMND_NAME}.insert`,
-                    title   : "Add Getters/Setters",
+                    title   : 'Add Getters/Setters',
                 },
                 {
                     command : `${utils.CMND_NAME}.remove`,
-                    title   : "Remove Getters/Setters",
+                    title   : 'Remove Getters/Setters',
                 },
                 {
                     command : `${utils.CMND_NAME}.removeSelfAndMethods`,
-                    title   : "Remove Property + Getters/Setters",
+                    title   : 'Remove Property + Getters/Setters',
                 },
             );
         }
 
-        const _constructor = parser.getConstructor(this.CLASS_AST);
+        if (this.CLASS_AST.kind == 'class') {
+            const _constructor = parser.getConstructor(this.CLASS_AST);
 
-        if (!_constructor) {
-            list.push(
-                {
-                    command : `${utils.CMND_NAME}.addConstructor`,
-                    title   : "Add Constructor",
-                },
-            );
+            if (!_constructor) {
+                list.push(
+                    {
+                        command : `${utils.CMND_NAME}.addConstructor`,
+                        title   : 'Add Constructor',
+                    },
+                );
+            }
         }
 
         return list.map((item) => this.createCommand(item));

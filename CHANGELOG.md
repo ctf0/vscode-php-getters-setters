@@ -19,3 +19,7 @@
 ## 0.0.2
 
 - support adding property to method, same as constructor, cmnd will add property based on the cursor location
+
+## 0.0.3
+
+- support adding property to method in interfaces

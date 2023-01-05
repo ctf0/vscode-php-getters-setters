@@ -52,6 +52,8 @@ As you can see a [Property](src/Contracts/Property.ts) object is passed to templ
 
 ## Notes
 
-- Does NOT support different classes in a single document.
-- its recommended to add each `property/property promotion` on its own line
-- the ext will detect when the cursor is at a constructor and add a property promotion, otherwise it will add the new property to the class scope
+- Does NOT support multiple classes in a single document.
+- the ext will detect when the cursor is at
+    - a constructor and add a property promotion
+    - a method and add an argument
+    - otherwise it will add the new property to the class scope

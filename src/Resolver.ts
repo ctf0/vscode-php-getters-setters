@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
-import Configuration from "./Contracts/Configuration";
-import Property from "./Contracts/Property";
+import Configuration from './Contracts/Configuration';
+import Property from './Contracts/Property';
 import TemplatesManager from './Contracts/TemplatesManager';
 import * as parser from './Parser';
 
@@ -483,6 +483,11 @@ export default class Resolver {
 
     async addConstructor() {
         this.setEditorAndAST();
+
+        if (this.CLASS_AST.kind != 'class') {
+            return this.showMessage('only classes can have constructor');
+        }
+
         const { document } = this.EDITOR;
 
         const position = parser.getClassScopeInsertLine(this.CLASS_AST);
@@ -514,7 +519,7 @@ export default class Resolver {
         let position: any;
         let prefix = '';
         let suffix = '';
-        let snippet = "\${1|public,private,protected|} \${2:type} \$\${3:name}\${4: = \${5:'value'}}";
+        let snippet = '\${1|public,private,protected|} \${2:type} \$\${3:name}\${4: = \${5:\'value\'}}';
 
         const activeLine = selection.active.line;
         const _const = parser.getConstructor(this.CLASS_AST);
@@ -566,7 +571,7 @@ export default class Resolver {
         const insideMethodBody = _methods?.find((method) => method.loc.start.line - 1 <= activeLine && method.loc.end.line - 1 >= activeLine);
 
         if (_methods && insideMethodBody && !insideConstructorBody) {
-            snippet = "\${1:type} \$\${2:var}\${3: = \${4:'value'}}";
+            snippet = '\${1:type} \$\${2:var}\${3: = \${4:\'value\'}}';
 
             const args = insideMethodBody?.arguments;
 

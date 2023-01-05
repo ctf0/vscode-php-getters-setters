@@ -29,7 +29,7 @@ export function buildClassASTFromContent(content: string) {
 }
 
 function getClass(AST: any) {
-    return AST?.children?.find((item: any) => item.kind == 'class');
+    return AST?.children?.find((item: any) => item.kind == 'class' || item.kind == 'interface');
 }
 
 export function getConstructor(_classAST: any, getArgsOnly = false) {

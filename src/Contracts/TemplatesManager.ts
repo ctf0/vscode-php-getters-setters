@@ -2,7 +2,7 @@
 
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import Configuration from "./Configuration";
+import Configuration from './Configuration';
 
 export default class TemplatesManager {
     config: Configuration;
