@@ -5,7 +5,7 @@ import CodeAction from './Providers/CodeAction';
 import Resolver from './Resolver';
 import * as utils from './utils';
 
-function activate(context: vscode.ExtensionContext) {
+export function activate(context: vscode.ExtensionContext) {
     const resolver = new Resolver();
 
     context.subscriptions.push(
@@ -24,9 +24,5 @@ function activate(context: vscode.ExtensionContext) {
     );
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-function deactivate() {
+export function deactivate() {
 }
-
-exports.activate = activate;
-exports.deactivate = deactivate;

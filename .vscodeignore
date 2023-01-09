@@ -4,3 +4,7 @@ src/**
 .gitignore
 tsconfig.json
 .github/**
+.DS_Store
+.history
+yarn.lock
+*.vsix
