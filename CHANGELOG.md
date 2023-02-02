@@ -23,3 +23,9 @@
 ## 0.0.3
 
 - support adding property to method in interfaces
+
+## 0.0.5
+
+- fix `Add To All Properties` not working if no constructor is found
+- better commands titles
+- better undo/redo

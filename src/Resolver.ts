@@ -139,7 +139,7 @@ export default class Resolver {
     getContentForArgument(addGetter = false, addSetter = false): string {
         let content = '';
 
-        for (const prop of parser.getAllPropertyPromotions(this.CLASS_AST)) {
+        for (const prop of parser.getAllPropertyPromotions(this.CLASS_AST) || []) {
             let property: any;
 
             try {
@@ -186,9 +186,12 @@ export default class Resolver {
         const editor = this.EDITOR;
 
         try {
-            await editor.edit((edit: vscode.TextEditorEdit) => edit.replace(new vscode.Position(insertLine, 0), template));
+            await editor.edit(
+                (edit: vscode.TextEditorEdit) => edit.replace(new vscode.Position(insertLine, 0), template),
+                { undoStopBefore: false, undoStopAfter: false },
+            );
 
-            await this.jumpToLine(insertLine + (template.split('\n').length - 1));
+            await this.jumpToLine(insertLine + (template.split('\n').length - 2));
         } catch (error) {
             this.showMessage(`Error generating functions: ${error}`);
         }
@@ -316,7 +319,10 @@ export default class Resolver {
         const editor = this.EDITOR;
 
         try {
-            await editor.edit((edit: vscode.TextEditorEdit) => edit.delete(range));
+            await editor.edit(
+                (edit: vscode.TextEditorEdit) => edit.delete(range),
+                { undoStopBefore: false, undoStopAfter: false },
+            );
 
             if (goToLine) {
                 await this.jumpToLine(range.start.line - 1);
@@ -411,8 +417,8 @@ export default class Resolver {
         const editor = this.EDITOR;
         const { selections, document } = editor;
         const _class = this.CLASS_AST;
-        let rangesToRemove = [];
-        const txtToRemove = [];
+        let rangesToRemove: any = [];
+        const txtToRemove: any = [];
 
         for (const selection of selections) {
             let isPropPromotion = false;
@@ -475,7 +481,10 @@ export default class Resolver {
                 txt = txt.replace(item.find, item.replaceWith);
             }
 
-            await editor.edit((edit: vscode.TextEditorEdit) => edit.replace(new vscode.Range(0, 0, document.lineCount, 0), txt));
+            await editor.edit(
+                (edit: vscode.TextEditorEdit) => edit.replace(new vscode.Range(0, 0, document.lineCount, 0), txt),
+                { undoStopBefore: false, undoStopAfter: false },
+            );
         }
 
         await this.removeEmptyLines();
@@ -617,11 +626,12 @@ export default class Resolver {
         if (!insideConstructorBody && !insideMethodBody) {
             position = parser.getClassScopeInsertLine(this.CLASS_AST);
 
-            prefix = '\n';
-            suffix = ';\n';
+            prefix = position.addPrefixLine ? '\n\n' : '\n';
+            suffix = position.addSuffixLine ? ';\n\n' : ';';
 
             if (position.column == 0) {
                 prefix = this.DEFAULT_INDENT;
+                suffix = position.addSuffixLine ? ';\n' : ';';
             }
 
             if (position.column == this.DEFAULT_INDENT.length) {

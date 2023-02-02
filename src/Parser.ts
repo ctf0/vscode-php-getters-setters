@@ -1,9 +1,7 @@
 import * as PhpParser from 'php-parser';
 import * as vscode from 'vscode';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const _set = require('lodash.set');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const DocParser = require('doc-parser');
 const DocReader = new DocParser();
 const Parser = new PhpParser.Engine({
@@ -57,8 +55,10 @@ export function getClassScopeInsertLine(_classAST: any) {
         position = _properties[_properties.length - 1];
 
         return {
-            line   : position.loc.end.line - 1,
-            column : position.loc.end.column,
+            line          : position.loc.end.line - 1,
+            column        : position.loc.end.column,
+            addPrefixLine : true,
+            addSuffixLine : false,
         };
     }
 
@@ -76,8 +76,10 @@ export function getClassScopeInsertLine(_classAST: any) {
         }
 
         return {
-            line   : position.loc.start.line - 1,
-            column : position.loc.start.column,
+            line          : position.loc.start.line - 1,
+            column        : position.loc.start.column,
+            addPrefixLine : false,
+            addSuffixLine : true,
         };
     }
 
@@ -86,8 +88,10 @@ export function getClassScopeInsertLine(_classAST: any) {
     position = _classAST;
 
     return {
-        line   : position.loc.end.line - 1,
-        column : 0,
+        line          : position.loc.end.line - 1,
+        column        : 0,
+        addPrefixLine : false,
+        addSuffixLine : true,
     };
 }
 
