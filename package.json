@@ -2,7 +2,7 @@
     "name": "vscode-php-getters-setters-new",
     "displayName": "PHP Getters & Setters (New)",
     "description": "PHP class properties support (add/remove/getters/setters)",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "publisher": "ctf0",
     "author": "ctf0",
     "repository": "https://github.com/ctf0/vscode-php-getters-setters",
@@ -42,6 +42,11 @@
                     ],
                     "default": null,
                     "description": "Folder where custom templates are stored"
+                },
+                "phpGettersSetters.showReadonly": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "add php 8.1 readonly to property snippet"
                 }
             }
         },
@@ -123,9 +128,9 @@
         "watch": "npm run esbuild"
     },
     "devDependencies": {
-        "@types/node": "^18.11.18",
+        "@types/node": "^18.14.1",
         "@types/vscode": "^1.68.0",
-        "esbuild": "^0.17.5",
+        "esbuild": "^0.17.10",
         "typescript": "^4.9.5"
     },
     "dependencies": {

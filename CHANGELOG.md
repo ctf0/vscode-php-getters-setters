@@ -29,3 +29,8 @@
 - fix `Add To All Properties` not working if no constructor is found
 - better commands titles
 - better undo/redo
+
+## 0.0.6
+
+- add new config `phpGettersSetters.showReadonly`
+- fix add property to normal methods

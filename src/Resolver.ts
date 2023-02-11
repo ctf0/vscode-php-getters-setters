@@ -308,6 +308,7 @@ export default class Resolver {
         return ranges
             .sort((a: any, b: any) => {
                 if (a.start.line > b.start.line) return 1;
+
                 if (b.start.line > a.start.line) return -1;
 
                 return 0;
@@ -528,7 +529,8 @@ export default class Resolver {
         let position: any;
         let prefix = '';
         let suffix = '';
-        let snippet = '\${1|public,private,protected|} \${2:type} \$\${3:name}\${4: = \${5:\'value\'}}';
+        const readOnly = utils.config.showReadonly ? ' readonly ' : '';
+        let snippet = `\${1|public,private,protected|}${readOnly}\${2:type} \$\${3:name}\${4: = \${5:\'value\'}}`;
 
         const activeLine = selection.active.line;
         const _const = parser.getConstructor(this.CLASS_AST);
@@ -608,13 +610,13 @@ export default class Resolver {
             } else {
                 // get insert place when no args
                 const constLineText = document.getText(new vscode.Range(
-                    _const.loc.start.line - 1,
-                    _const.loc.start.column,
-                    _const.body.loc.start.line - 1,
-                    _const.body.loc.start.column,
+                    insideMethodBody.loc.start.line - 1,
+                    insideMethodBody.loc.start.column,
+                    insideMethodBody.body.loc.start.line - 1,
+                    insideMethodBody.body.loc.start.column,
                 ));
 
-                position = document.positionAt(_const.loc.start.offset + constLineText.indexOf('(') + 1);
+                position = document.positionAt(insideMethodBody.loc.start.offset + constLineText.indexOf('(') + 1);
 
                 position = {
                     line   : position.line,
