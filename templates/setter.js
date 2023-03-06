@@ -1,30 +1,33 @@
 module.exports = (property) => {
-    let type = property.getTypeHint()
-    let name = property.getName()
-    let desc = property.getDescription() || ''
+    let type = property.getTypeHint();
+    let name = property.getName();
+    let getterDesc = property.getDescription() || '';
+    let setterDesc = property.setterDescription() || '';
 
-    let docs = ''
+    let docs = '';
 
     if (type) {
+        type = type.replace(/( )?\$.*/, '');
+
         if (type.match(/[\>\]]/)) {
             docs = `
     /**
-     * ${property.setterDescription()}
+     * ${setterDesc}
      *
-     * @param ${type} \$${name}${desc ? ` ${desc}` : ''}
-     */`
+     * @param ${type} \$${name}${getterDesc ? ` ${getterDesc}` : ''}
+     */`;
         }
 
         if (type.match(/array(?!\s*<)/)) {
             docs = `
     /**
-     * ${property.setterDescription()}
+     * ${setterDesc}
      *
-     * @param ${type}<mixed> \$${name}${desc ? ` ${desc}` : ''}
-     */`
+     * @param ${type}<mixed> \$${name}${getterDesc ? ` ${getterDesc}` : ''}
+     */`;
         }
 
-        type = type ? `${type} ` : ''
+        type = type ? `${type} ` : '';
     }
 
     return docs + `
@@ -34,5 +37,5 @@ module.exports = (property) => {
 
         return $this;
     }
-`
-}
+`;
+};

@@ -34,3 +34,9 @@
 
 - add new config `phpGettersSetters.showReadonly`
 - fix add property to normal methods
+
+## 0.0.7
+
+- fix `add property` error
+- fix `add property` snippet
+- fix getter/setter templates when property doc has the variable included

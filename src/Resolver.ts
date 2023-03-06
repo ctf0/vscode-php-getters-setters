@@ -50,7 +50,7 @@ export default class Resolver {
     }
 
     isRedirectEnabled(): boolean {
-        return true === this.config.get('redirect', true);
+        return this.config.get('redirect') === true;
     }
 
     showMessage(message: string, error = true) {
@@ -529,8 +529,8 @@ export default class Resolver {
         let position: any;
         let prefix = '';
         let suffix = '';
-        const readOnly = utils.config.showReadonly ? ' readonly ' : '';
-        let snippet = `\${1|public,private,protected|}${readOnly}\${2:type} \$\${3:name}\${4: = \${5:\'value\'}}`;
+        const readOnly = this.config.get('showReadonly') ? ' readonly' : '';
+        let snippet = `\${1|public,private,protected|}${readOnly} \${2:type} \$\${3:name}\${4: = \${5:\'value\'}}`;
 
         const activeLine = selection.active.line;
         const _const = parser.getConstructor(this.CLASS_AST);

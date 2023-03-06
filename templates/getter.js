@@ -1,24 +1,27 @@
 module.exports = (property) => {
-    let type = property.getTypeHint()
-    let docs = ''
+    let type = property.getTypeHint();
+    let desc = property.getterDescription() || '';
+    let docs = '';
 
     if (type) {
+        type = type.replace(/( )?\$.*/, '');
+
         if (type.match(/[\>\]]/)) {
             docs = `
     /**
-     * ${property.getterDescription()}
+     * ${desc}
      *
      * @return ${type}
-     */`
+     */`;
         }
 
         if (type.match(/array(?!\s*<)/)) {
             docs = `
     /**
-     * ${property.getterDescription()}
+     * ${desc}
      *
      * @return ${type}<mixed>
-     */`
+     */`;
         }
     }
 
@@ -27,5 +30,5 @@ module.exports = (property) => {
     {
         return $this->${property.getName()};
     }
-`
-}
+`;
+};
