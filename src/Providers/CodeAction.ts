@@ -19,12 +19,7 @@ export default class CodeAction implements vscode.CodeActionProvider {
             return;
         }
 
-        const list = [
-            {
-                command : `${utils.CMND_NAME}.addNewProperty`,
-                title   : 'Add New Property',
-            },
-        ];
+        const list: any = [];
 
         const _prop = parser.getPropertyAtLine(this.CLASS_AST, range.start, this.PROPS);
         const _arg = parser.getPropPromotionAtLine(this.CLASS_AST, range.start, this.PROMOS);
@@ -44,19 +39,6 @@ export default class CodeAction implements vscode.CodeActionProvider {
                     title   : 'Property: Remove + Getters/Setters',
                 },
             );
-        }
-
-        if (this.CLASS_AST.kind == 'class') {
-            const _constructor = parser.getConstructor(this.CLASS_AST);
-
-            if (!_constructor) {
-                list.unshift(
-                    {
-                        command : `${utils.CMND_NAME}.addConstructor`,
-                        title   : 'Add Constructor',
-                    },
-                );
-            }
         }
 
         return list.map((item) => this.createCommand(item));

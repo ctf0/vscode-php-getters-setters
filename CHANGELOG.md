@@ -40,3 +40,7 @@
 - fix `add property` error
 - fix `add property` snippet
 - fix getter/setter templates when property doc has the variable included
+
+## 0.0.8
+
+- remove code refactor and move it to its own extension

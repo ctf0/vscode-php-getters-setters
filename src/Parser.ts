@@ -45,56 +45,6 @@ export function getConstructor(_classAST: any, getArgsOnly = false) {
     return _const;
 }
 
-export function getClassScopeInsertLine(_classAST: any) {
-    let position: any = null;
-
-    // get last prop
-    const _properties = getAllProperties(_classAST);
-
-    if (_properties && _properties.length) {
-        position = _properties[_properties.length - 1];
-
-        return {
-            line          : position.loc.end.line - 1,
-            column        : position.loc.end.column,
-            addPrefixLine : true,
-            addSuffixLine : false,
-        };
-    }
-
-    // get first method
-    // ~first method comment if found
-    const methods = getAllMethods(_classAST);
-
-    if (methods && methods.length) {
-        position = methods[0];
-
-        const _comments = position.leadingComments;
-
-        if (_comments) {
-            position = _comments[0];
-        }
-
-        return {
-            line          : position.loc.start.line - 1,
-            column        : position.loc.start.column,
-            addPrefixLine : false,
-            addSuffixLine : true,
-        };
-    }
-
-    // or class start
-    // if non found
-    position = _classAST;
-
-    return {
-        line          : position.loc.end.line - 1,
-        column        : 0,
-        addPrefixLine : false,
-        addSuffixLine : true,
-    };
-}
-
 export function getAllProperties(_classAST: any) {
     return _classAST?.body
         .filter((item: any) => item.kind == 'propertystatement')

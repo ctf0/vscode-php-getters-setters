@@ -9,9 +9,6 @@ export function activate(context: vscode.ExtensionContext) {
     const resolver = new Resolver();
 
     context.subscriptions.push(
-        vscode.commands.registerCommand(`${utils.CMND_NAME}.addNewProperty`, async () => await resolver.addNewProperty()),
-        vscode.commands.registerCommand(`${utils.CMND_NAME}.addConstructor`, async () => await resolver.addConstructor()),
-
         vscode.commands.registerCommand(`${utils.CMND_NAME}.insert`, async () => await resolver.insert()),
         vscode.commands.registerCommand(`${utils.CMND_NAME}.remove`, async () => await resolver.remove()),
         vscode.commands.registerCommand(`${utils.CMND_NAME}.insertAll`, async () => await resolver.insertAll()),

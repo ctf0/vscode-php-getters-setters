@@ -2,7 +2,7 @@
     "name": "vscode-php-getters-setters-new",
     "displayName": "PHP Getters & Setters (New)",
     "description": "PHP class properties support (add/remove/getters/setters)",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "publisher": "ctf0",
     "author": "ctf0",
     "repository": "https://github.com/ctf0/vscode-php-getters-setters",
@@ -42,11 +42,6 @@
                     ],
                     "default": null,
                     "description": "Folder where custom templates are stored"
-                },
-                "phpGettersSetters.showReadonly": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "add php 8.1 readonly to property snippet"
                 }
             }
         },
@@ -75,16 +70,6 @@
                 "command": "phpGettersSetters.removeSelfAndMethods",
                 "title": "Remove Property + Getters/Setters",
                 "category": "Php Getters/Setters"
-            },
-            {
-                "command": "phpGettersSetters.addConstructor",
-                "title": "Add Constructor",
-                "category": "Php Getters/Setters"
-            },
-            {
-                "command": "phpGettersSetters.addNewProperty",
-                "title": "Add New Property",
-                "category": "Php Getters/Setters"
             }
         ],
         "menus": {
@@ -108,14 +93,6 @@
                 {
                     "command": "phpGettersSetters.removeSelfAndMethods",
                     "when": "editorLangId == php"
-                },
-                {
-                    "command": "phpGettersSetters.addConstructor",
-                    "when": "editorLangId == php"
-                },
-                {
-                    "command": "phpGettersSetters.addNewProperty",
-                    "when": "editorLangId == php"
                 }
             ]
         }
@@ -128,16 +105,16 @@
         "watch": "npm run esbuild"
     },
     "devDependencies": {
-        "@types/node": "^18.14.6",
+        "@types/node": "^18.15.11",
         "@types/vscode": "^1.68.0",
-        "esbuild": "^0.17.11",
-        "typescript": "^4.9.5"
+        "esbuild": "^0.17.15",
+        "typescript": "^5.0.4"
     },
     "dependencies": {
         "doc-parser": "^0.4.9",
         "lodash.set": "^4.3.2",
         "lodash.throttle": "^4.1.1",
-        "php-parser": "^3.1.3"
+        "php-parser": "^3.1.4"
     },
     "extensionDependencies": [
         "ctf0.blank-line-organizer"
