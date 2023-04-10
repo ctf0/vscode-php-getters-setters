@@ -5,7 +5,6 @@ based on https://github.com/cvergne/vscode-php-getters-setters + enhancements
 ## Enhancements (check [Notes](#notes))
 
 * Remove Property + getter/setter
-* add (property/property promotion, constructor)
 * Check [CHANGELOG](CHANGELOG.md) for changes
 
 ## Custom Templates
@@ -53,7 +52,3 @@ As you can see a [Property](src/Contracts/Property.ts) object is passed to templ
 ## Notes
 
 - Does NOT support multiple classes in a single document.
-- the ext will detect when the cursor is at
-    - a constructor and add a property promotion
-    - a method and add an argument
-    - otherwise it will add the new property to the class scope
