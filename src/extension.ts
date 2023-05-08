@@ -1,5 +1,3 @@
-'use strict';
-
 import * as vscode from 'vscode';
 import CodeAction from './Providers/CodeAction';
 import Resolver from './Resolver';

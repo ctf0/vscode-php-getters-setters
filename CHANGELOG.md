@@ -44,3 +44,7 @@
 ## 0.0.8
 
 - remove code refactor and move it to its own extension
+
+## 0.1.0
+
+- allow the extension to work regardless of parsing errors

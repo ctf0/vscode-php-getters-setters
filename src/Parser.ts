@@ -6,7 +6,8 @@ const DocParser = require('doc-parser');
 const DocReader = new DocParser();
 const Parser = new PhpParser.Engine({
     parser: {
-        extractDoc: true,
+        extractDoc     : true,
+        suppressErrors : true,
     },
     ast: {
         withPositions: true,
@@ -144,16 +145,14 @@ export function parseDocBlock(comment: string) {
 }
 
 function flagsToVisibility(flags: number): string {
-    let type = '';
-
     switch (flags) {
         case 1:
-            type = 'public';
+            return 'public';
         case 2:
-            type = 'protected';
+            return 'protected';
         case 4:
-            type = 'private';
+            return 'private';
+        default:
+            return '';
     }
-
-    return type;
 }
