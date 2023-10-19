@@ -353,8 +353,8 @@ export default class Resolver {
                 'setter',
             ],
             {
-                placeHolder : 'choose what to add/remove',
-                canPickMany : true,
+                placeHolder: 'choose what to add/remove',
+                canPickMany: true,
             },
         );
 
@@ -365,8 +365,8 @@ export default class Resolver {
         this.setEditorAndAST();
 
         const list = {
-            getter : false,
-            setter : false,
+            getter: false,
+            setter: false,
         };
 
         for (const select of types) {
@@ -450,8 +450,8 @@ export default class Resolver {
                     );
 
                     txtToRemove.push({
-                        find        : _commentValue,
-                        replaceWith : replaceWith,
+                        find: _commentValue,
+                        replaceWith: replaceWith,
                     });
                 }
             }

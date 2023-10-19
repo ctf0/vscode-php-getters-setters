@@ -9,7 +9,7 @@ based on https://github.com/cvergne/vscode-php-getters-setters + enhancements
 
 ## Custom Templates
 
-By default the extension will generate getters & setters using its own templates but you can fully customise the markup used to generate them,
+By default the extension will generate getters & setters using its own templates but you can fully customize the markup used to generate them,
 by setting `phpGettersSetters.templatesDir` with the path to the directory that holds both your `getter/setter.js`.
 
 - Sample getter.js template:
@@ -52,3 +52,4 @@ As you can see a [Property](src/Contracts/Property.ts) object is passed to templ
 ## Notes
 
 - Does NOT support multiple classes in a single document.
+- check (`templates/getter.js` & `templates/setter.js`) if you're not sure how to setup you own templates.

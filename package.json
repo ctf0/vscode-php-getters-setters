@@ -2,13 +2,13 @@
     "name": "vscode-php-getters-setters-new",
     "displayName": "PHP Getters & Setters (New)",
     "description": "PHP class properties support (add/remove/getters/setters)",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "publisher": "ctf0",
     "author": "ctf0",
     "repository": "https://github.com/ctf0/vscode-php-getters-setters",
     "icon": "images/icon.png",
     "engines": {
-        "vscode": "^1.68.0"
+        "vscode": "^1.80.0"
     },
     "categories": [
         "Other"
@@ -105,16 +105,16 @@
         "watch": "npm run esbuild"
     },
     "devDependencies": {
-        "@types/node": "^18.15.11",
-        "@types/vscode": "^1.68.0",
-        "esbuild": "^0.17.15",
-        "typescript": "^5.0.4"
+        "@types/node": "^20.8.7",
+        "@types/vscode": "^1.80.0",
+        "esbuild": "^0.19.5",
+        "typescript": "^5.2.2"
     },
     "dependencies": {
         "doc-parser": "^0.4.9",
         "lodash.set": "^4.3.2",
         "lodash.throttle": "^4.1.1",
-        "php-parser": "^3.1.4"
+        "php-parser": "^3.1.5"
     },
     "extensionDependencies": [
         "ctf0.blank-line-organizer"

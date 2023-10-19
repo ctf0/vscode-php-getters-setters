@@ -1,5 +1,6 @@
 module.exports = (property) => {
     let type = property.getTypeHint();
+    let nullable = property.isNullable();
     let name = property.getName();
     let getterDesc = property.getDescription() || '';
     let setterDesc = property.setterDescription() || '';
@@ -27,7 +28,7 @@ module.exports = (property) => {
      */`;
         }
 
-        type = type ? `${type} ` : '';
+        type = type ? `${nullable ? '?'+type : type} ` : '';
     }
 
     return docs + `

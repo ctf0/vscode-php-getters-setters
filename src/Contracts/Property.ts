@@ -29,7 +29,6 @@ export default class Property {
         let _propCommentValue = '';
         let _propTypeValue = '';
         let _propNameValue = '';
-        const _propVisibility: string = _prop.visibility;
 
         if (_comments) {
             _propCommentValue = _comments.find((item: any) => item.value.includes('@'))?.value;
@@ -37,7 +36,7 @@ export default class Property {
 
         if (_prop.properties) {
             const _property = _prop.properties[0];
-            _propTypeValue = _property.type?.name;
+            _propTypeValue = this.resolveType(_property);
             _propNameValue = _property.name?.name;
         }
 
@@ -64,6 +63,21 @@ export default class Property {
         return property;
     }
 
+    static resolveType(_property) {
+        const type = _property.type
+        let name = type?.name
+
+        if (name) {
+            if (_property.nullable == true) {
+                name = `?${name}`
+            }
+        } else {
+            name = type?.types.map((item) => item.name).join('|')
+        }
+
+        return name
+    }
+
     static parsePromotion(_prop: any): Property {
         if (!_prop || !_prop.flags) {
             throw new Error('Invalid argument line');
@@ -80,7 +94,6 @@ export default class Property {
         const _propNameValue: string = _prop.name.name;
         let _propCommentValue = '';
         const _propTypeValue: string = _prop.type?.name;
-        const _propVisibility: string = _prop.visibility;
 
         if (_comments) {
             _propCommentValue = parser.getCommentBlockFor(_comments, _propNameValue)?.value;

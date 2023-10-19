@@ -1,5 +1,6 @@
 module.exports = (property) => {
     let type = property.getTypeHint();
+    let nullable = property.isNullable();
     let desc = property.getterDescription() || '';
     let docs = '';
 
@@ -26,7 +27,7 @@ module.exports = (property) => {
     }
 
     return docs + `
-    public function ${property.getterName()}()${docs ? '' : `: ${type}`}
+    public function ${property.getterName()}()${docs ? '' : `: ${nullable ? '?'+type : type}`}
     {
         return $this->${property.getName()};
     }
