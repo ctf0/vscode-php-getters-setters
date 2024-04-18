@@ -6,8 +6,8 @@ const DocParser = require('doc-parser');
 const DocReader = new DocParser();
 const Parser = new PhpParser.Engine({
     parser: {
-        extractDoc     : true,
-        suppressErrors : true,
+        extractDoc: true,
+        suppressErrors: true,
     },
     ast: {
         withPositions: true,
@@ -28,7 +28,7 @@ export function buildClassASTFromContent(content: string) {
 }
 
 function getClass(AST: any) {
-    return AST?.children?.find((item: any) => item.kind == 'class' || item.kind == 'interface');
+    return AST?.children?.find((item: any) => ['class', 'interface', 'trait'].includes(item.kind));
 }
 
 export function getConstructor(_classAST: any, getArgsOnly = false) {
@@ -37,8 +37,8 @@ export function getConstructor(_classAST: any, getArgsOnly = false) {
     if (getArgsOnly) {
         return _const?.arguments.map((item: PhpParser.Parameter) =>
             Object.assign(item, {
-                leadingComments : _const.leadingComments,
-                visibility      : flagsToVisibility(item.flags),
+                leadingComments: _const.leadingComments,
+                visibility: flagsToVisibility(item.flags),
             }),
         );
     }
@@ -105,8 +105,8 @@ export function getPropertyMethodsRange(_classAST: any, methodNames: string[]): 
     }
 
     return {
-        ranges  : list,
-        methods : methodsFound,
+        ranges: list,
+        methods: methodsFound,
     };
 }
 
@@ -125,12 +125,27 @@ export function getCommentBlockFor(_comments: any[], name: string): any {
 }
 
 export function buildRangeIncludingComments(item: any, withoutCommentRange = false) {
-    const __comments = item.leadingComments;
-    const startPosition = withoutCommentRange
-        ? item
-        : ((__comments && __comments.length) ? __comments[0] : item);
+    if (withoutCommentRange) {
+        return getRangeFromLoc(item.loc.start, item.loc.end);
+    }
 
-    return getRangeFromLoc(startPosition.loc.start, item.loc.end);
+    let __commentsStart = item.leadingComments;
+    let __annotationStart = item.properties
+
+    if (__commentsStart?.length) {
+        __commentsStart = __commentsStart[0].loc.start
+    }
+    if (__annotationStart?.length) {
+        __annotationStart = __annotationStart[0].attrGroups[0].loc.start
+    } else {
+        __annotationStart = item.attrGroups.length ? item.attrGroups[0].loc.start : undefined
+    }
+
+    const __itemStart = item.loc.start
+    const __infoStart = __commentsStart?.line < __annotationStart?.line ? __commentsStart : __annotationStart
+    const startPosition = __infoStart?.line < __itemStart.line ? __infoStart : __itemStart;
+
+    return getRangeFromLoc(startPosition, item.loc.end);
 }
 
 export function getRangeFromLoc(start: { line: number; column: number; }, end: { line: number; column: number; }): vscode.Range {

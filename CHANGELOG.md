@@ -52,3 +52,8 @@
 ## 0.1.1
 
 - fix nullable types [#1](https://github.com/ctf0/vscode-php-getters-setters/issues/1), make sure to update your custom template files with the new changes from the included ones (`templates/getter.js` & `templates/setter.js`).
+
+## 0.2.0
+
+- fix not removing annotation
+- now works inside traits as well
